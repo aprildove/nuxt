@@ -1,88 +1,58 @@
 <!doctype html>
 <html lang="en">
-  <head>
-      <meta charset="utf-8">
-      <title>simulated data</title>
-      <script type="text/javascript" src="d3.min.js"></script>
-  </head>
-  <body>
-       <script type="text/javascript">
-       
-       // 随机生成成绩
-       var score= new Array();
-       var num1=d3.range(6).map(d3.random.normal(0.8,0.1));
-        for(i=0;i<num1.length;i++){
-          var num11=Math.round(num1[i]*100);
-          if(num11>100){
-            console.log(100);
-            stuscore.push(100);
-          }else{           
-            score.push(num11);
-          }         
-        }
-       
-         // 随机生成年级
-         var grades=[1,2,3,4];
-         var grade=Math.floor(Math.random()*4+1);
-        
-         // 随机生成班级
-         var classes=[1,2];
-         var classe=Math.floor(Math.random()*2+1);
-        
-        
-         //随机生成姓
-         var lastnames=["赵","钱","孙","李","周","吴","郑","王","冯","陈","卫","蒋","沈","韩","杨","朱","秦","许","何","吕","施","张"];
-         var lastname=Math.floor(Math.random()*lastnames.length+1)-1;
-
-         //随机生成名
-         var firstnames=["伟","芳","娜","丽","强","静","敏","磊","军","涛","明","刚","洁","斓","文","华","金","斌","波","辉","亮","超"];
-         var firstname=Math.floor(Math.random()*firstnames.length+1)-1;
-         
-      </script>
-       {<br>
-      <span>
-        "<label></label><label></label>":[ <br>
-       &nbsp; {<br>
-       &nbsp;&nbsp; "grade":"<label></label>",<br>
-       &nbsp;&nbsp; "class":"<label></label>",<br>
-       &nbsp;&nbsp; "course":{<br>
-       &nbsp;&nbsp;&nbsp;    "计算机网络":"<label></label>",<br>
-       &nbsp;&nbsp;&nbsp;    "大学英语":"<label></label>",<br>
-       &nbsp;&nbsp;&nbsp;    "Web前端开发":"<label></label>",<br>
-       &nbsp;&nbsp;&nbsp;    "C语言程序设计":"<label></label>",<br>
-       &nbsp;&nbsp;&nbsp;    "数据结构":"<label></label>",<br>
-       &nbsp;&nbsp;&nbsp;    "大学物理":"<label></label>",<br>
-       &nbsp;&nbsp; }<br>
-       &nbsp; }<br>
-       ],<br>
-      </span>
-     }     
+    <head>
+        <meta charset="utf-8">
+        <title>simulated data</title>
+        <script type="text/javascript" src="d3.min.js"></script>
+    </head>
+    <body>
+        <div id="main"></div>
         <script type="text/javascript">
-      console.log(document.getElementsByTagName("label"));
-      document.getElementsByTagName("label")[0].innerHTML=lastnames[lastname];
-      document.getElementsByTagName("label")[1].innerHTML=firstnames[firstname];
-      document.getElementsByTagName("label")[2].innerHTML=grade;
-      document.getElementsByTagName("label")[3].innerHTML=classe;
-      document.getElementsByTagName("label")[4].innerHTML=score[0];
-      document.getElementsByTagName("label")[5].innerHTML=score[1];
-      document.getElementsByTagName("label")[6].innerHTML=score[2];
-      document.getElementsByTagName("label")[7].innerHTML=score[3];
-      document.getElementsByTagName("label")[8].innerHTML=score[4];
-      document.getElementsByTagName("label")[9].innerHTML=score[5];
-      console.log(document.getElementsByTagName("label").innerHTML);
-
-      // 生成随机数组的N组值
-       var items=new Array();
-       for(var j=0;j<3;j++){
-        items[j]=document.getElementsByTagName("span")[j].innerHTML;  
-        console.log(items);
-       }
- </script>
-       
+            // 随机生成成绩
+            var score= new Array();
+            var num1=d3.range(6).map(d3.random.normal(0.8,0.1));
+             // 随机生成年级
+            var grades=[1,2,3,4];
+            // 随机生成班级
+            var classes=[1,2];
+            //随机生成姓
+            var lastnames=["赵","钱","孙","李","周","吴","郑","王","冯","陈","卫","蒋","沈","韩","杨","朱","秦","许","何","吕","施","张"];
+            //随机生成名
+            var firstnames=["伟","芳","娜","丽","强","静","敏","磊","军","涛","明","刚","洁","斓","文","华","金","斌","波","辉","亮","超"];
+            function getStu(){
+                var stu = {
+                    "name":"",
+                    "detail":{}
+                };
+                var lastname=lastnames[Math.floor(Math.random()*lastnames.length+1)-1];
+                var firstname=firstnames[Math.floor(Math.random()*firstnames.length+1)-1];
+                var grade=Math.floor(Math.random()*4+1);
+                var classe=Math.floor(Math.random()*2+1);
+                stu.name = lastname+firstname;
+                stu.detail.grade = grade;
+                stu.detail.class = classe;
+                stu.detail.score = num1.map(function(d){
+                    return d*100>100?100:Math.round(d*100);
+                });
+                return stu;
+            }
+        </script>
+        <script type="text/javascript">
+            for(var i=0;i<300;i++){
+                var stu = getStu();
+                var temp = document.createElement("div");
+                temp.innerHTML='<div id="copy">{<br><span>"<label></label>":[ <br>&nbsp; {<br>&nbsp;&nbsp; "grade":"<label></label>",<br>&nbsp;&nbsp; "class":"<label></label>",<br> &nbsp;&nbsp; "course":{<br>&nbsp;&nbsp;&nbsp;"计算机网络":"<label></label>",<br>&nbsp;&nbsp;&nbsp;"大学英语":"<label></label>",<br>&nbsp;&nbsp;&nbsp;    "Web前端开发":"<label></label>",<br>&nbsp;&nbsp;&nbsp;"C语言程序设计":"<label></label>",<br>&nbsp;&nbsp;&nbsp;"数据结构":"<label></label>",<br>&nbsp;&nbsp;&nbsp;"大学物理":"<label></label>",<br>&nbsp;&nbsp; }<br>&nbsp; }<br>],<br></span>}</div>';
+                temp.getElementsByTagName("label")[0].innerHTML=stu.name;
+                temp.getElementsByTagName("label")[1].innerHTML=stu.detail.grade;
+                temp.getElementsByTagName("label")[2].innerHTML=stu.detail.class;
+                temp.getElementsByTagName("label")[3].innerHTML=stu.detail.score[0];
+                temp.getElementsByTagName("label")[4].innerHTML=stu.detail.score[1];
+                temp.getElementsByTagName("label")[5].innerHTML=stu.detail.score[2];
+                temp.getElementsByTagName("label")[6].innerHTML=stu.detail.score[3];
+                temp.getElementsByTagName("label")[7].innerHTML=stu.detail.score[4];
+                temp.getElementsByTagName("label")[8].innerHTML=stu.detail.score[5];
+                document.getElementById("main").appendChild(temp);
+            }  
+        </script>
   </body>
 </html>
- 
-
-
-      
-
