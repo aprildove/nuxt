@@ -41,7 +41,28 @@
             for(var i=0;i<300;i++){
                 var stu = getStu();
                 var temp = document.createElement("div");
-                temp.innerHTML='<div id="copy">{<br><span>"<label></label>":[ <br>&nbsp; {<br>&nbsp;&nbsp; "grade":"<label></label>",<br>&nbsp;&nbsp; "class":"<label></label>",<br> &nbsp;&nbsp; "course":{<br>&nbsp;&nbsp;&nbsp;"计算机网络":"<label></label>",<br>&nbsp;&nbsp;&nbsp;"大学英语":"<label></label>",<br>&nbsp;&nbsp;&nbsp;    "Web前端开发":"<label></label>",<br>&nbsp;&nbsp;&nbsp;"C语言程序设计":"<label></label>",<br>&nbsp;&nbsp;&nbsp;"数据结构":"<label></label>",<br>&nbsp;&nbsp;&nbsp;"大学物理":"<label></label>",<br>&nbsp;&nbsp; }<br>&nbsp; }<br>],<br></span>}</div>';
+                temp.innerHTML='
+                <div id="copy">
+                    {<br>
+                    	<span>
+                    	"<label></label>":[ 
+                    	<br>&nbsp; {
+                    		<br>
+                    		&nbsp;&nbsp; "grade":"<label></label>",<br>
+                    		&nbsp;&nbsp; "class":"<label></label>",<br> 
+                    		&nbsp;&nbsp; "course":{<br>
+                    			&nbsp;&nbsp;&nbsp;"计算机网络":"<label></label>",<br>
+                    			&nbsp;&nbsp;&nbsp;"大学英语":"<label></label>",<br>
+                    			&nbsp;&nbsp;&nbsp;"Web前端开发":"<label></label>",<br>
+                    			&nbsp;&nbsp;&nbsp;"C语言程序设计":"<label></label>",<br>
+                    			&nbsp;&nbsp;&nbsp;"数据结构":"<label></label>",<br>
+                    			&nbsp;&nbsp;&nbsp;"大学物理":"<label></label>"<br>
+                    			&nbsp;&nbsp; }
+                    			<br>
+                    			&nbsp; }<br>
+                    			],<br>
+                    	</span>}
+                </div>';
                 temp.getElementsByTagName("label")[0].innerHTML=stu.name;
                 temp.getElementsByTagName("label")[1].innerHTML=stu.detail.grade;
                 temp.getElementsByTagName("label")[2].innerHTML=stu.detail.class;
