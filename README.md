@@ -1,29 +1,22 @@
-# make-json
-我需要一个json格式的数据文件，作为模拟数据
-数据格式如下：
-```
-{
-    "studentA": [
-        {
-            "grade": "A",
-            "class": "B",
-            "course": {
-                "a": "0-100",
-                " b ": "0-100"
-            }
-        }
-    ],
-    "studentB": [
-        {
-            "grade": "A",
-            "class": "B",
-            "course": {
-                "a": "0-100",
-                " b ": "0-100"
-            }
-        }
-    ],
-    ......
-}
+# nuxtblog
+
+> Nuxt.js project
+
+## Build Setup
+
+``` bash
+# install dependencies
+$ npm install # Or yarn install
+
+# serve with hot reload at localhost:3000
+$ npm run dev
+
+# build for production and launch server
+$ npm run build
+$ npm start
+
+# generate static project
+$ npm run generate
 ```
 
+For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
