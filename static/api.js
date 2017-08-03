@@ -7,19 +7,20 @@ getFun.defaults.headers.common['X-Token'] = '4b435e5175092e040d98c15992cfc23b'
 /**
  * 显示在主页的中下方，展示文章的摘要、分类等信息
  * @param              type 为''时，只返回article/list的数据
+ *                     page 页数
  *                     type 为 category 按照分類category搜索 例如：/api/v1/article/find/category/技术研究/1
  *                     type 为 tag 按照标签tag搜索 例如：/api/v1/article/find/tag/apt/1
  * @param              itemName catagory或tag的项
  * @returns {Promise}
  */
-export const getCat = function (type, itemName) {
+export const getCat = function (page, type, itemName) {
   return new Promise((resolve, reject) => {
-    let normalList = '/api/v1/article/list'
-    let catList = '/api/v1/article/find/' + type + '/' + itemName
+    let normalList = '/api/v1/article/list/' + page
+    let catList = '/api/v1/article/find/' + type + '/' + itemName + '/' + page
     let port = type ? catList : normalList
     getFun.get(port)
       .then(function (res) {
-        resolve(res.data.msg)
+        resolve(res.data)
       })
       .catch(function (err) {
         reject(err)
@@ -36,6 +37,7 @@ export const getById = function (id) {
   return new Promise((resolve, reject) => {
     getFun.get('/api/v1/article/find/id/' + id)
       .then(function (res) {
+        console.log('fffffffffffffffff')
         resolve(res.data.msg)
       })
       .catch(function (err) {

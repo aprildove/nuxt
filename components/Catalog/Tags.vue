@@ -1,12 +1,11 @@
 <template>
   <div class="tags" v-if="item">
     <p class="tag" v-for="tag in item.tags">
-      {{tag}}
+      {{tag.toUpperCase()}}
     </p>
   </div>
 </template>
 <script>
-
   export default {
     props: ['item']
   }
@@ -14,9 +13,10 @@
 <style lang="less" scoped>
   .tags {
     height: 42px;
+    padding-top: 10px;
   }
   .tag {
-    background-color: #91c46b;
+    background-color: #6aacd8;
     display: inline-block;
     height: 22px;
     font-size: 13px;

@@ -1,9 +1,11 @@
 <template>
-  <section class="container">
-    <navigation :is-main-page="isMainPage"></navigation>
-    <catalog :is-main-page="isMainPage"
-             :page-id="pageId" ></catalog>
-    <tag :is-main-page="isMainPage"></tag>
+  <section>
+    <navigation></navigation>
+    <div class="container">
+      <catalog></catalog>
+      <tag></tag>
+    </div>
+
   </section>
 </template>
 
@@ -11,19 +13,24 @@
   import Nav from '../components/Navigation.vue'
   import Tag from '../components/NewTag.vue'
   import Catalog from '../components/Catalog.vue'
+  import { mapActions } from 'vuex'
   export default {
-    data () {
-      return {
-        isMainPage: true,
-        pageId: ''
-      }
-    },
     components: {
       navigation: Nav,
       tag: Tag,
       catalog: Catalog
+    },
+    methods: {
+      ...mapActions(['pipeIsMainPage'])
+    },
+    created () {
+      this.pipeIsMainPage(true)
     }
   }
 </script>
-<style>
+<style lang="less" scoped>
+  .container {
+    margin: 0 auto;
+    max-width: 1300px;
+  }
 </style>

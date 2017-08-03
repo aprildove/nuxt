@@ -1,41 +1,52 @@
 <template>
   <div class='tag' v-if='isMainPage'>
     <div class="tag-header">
-      <div class="h h-left" :class="{ 'h-chosen' : type == 'catList'}"
+      <div class="tag-header h-left" :class="{ 'h-chosen' : type == 'catList'}"
            @click="toggle('catList')">类别</div>
-      <div class="h h-right" :class="{ 'h-chosen' : type == 'tagList'}"
+      <div class="tag-header h-right" :class="{ 'h-chosen' : type == 'tagList'}"
            @click="toggle('tagList')">标签</div>
     </div>
     <div class="tag-body">
       <ul class="tag-list">
         <li class="tag-item" :class="{'item-chosen': tagItem == item.category}"
-            v-if="type == 'catList'" v-for='item in CatList'
-            @click="sortByType('category', item)">{{item.category}}/{{}}</li>
+            v-if="(type == 'catList') && item.category" v-for='item in CatList'
+            @click="sortByType('category', item)">
+          <a>
+            {{item.category}}
+          </a>
+          </li>
         <li class="tag-item" :class="{'item-chosen': tagItem == item.tag }"
             v-if="type == 'tagList'" v-for='item in TagList'
-            @click="sortByType('tag', item)">{{item.tag}}</li>
+            @click="sortByType('tag', item)">
+          <a>{{item.tag}}</a>
+        </li>
       </ul>
     </div>
   </div>
 </template>
 <script>
   import { getTagList } from '../static/api.js'
+  import * as types from '../store/mutations.js'
+  import { mapState } from 'vuex'
   export default {
     data () {
       return {
         CatList: [],
         TagList: [],
         type: 'catList',
-        tagItem: ''
+        tagItem: '全部'
       }
     },
-    props: ['isMainPage'],
+    computed: {
+      ...mapState(['isMainPage'])
+    },
     methods: {
-//      sortByType: function (type, item) {
-//        let param = [type, item[type]]
-//        this.tagItem = item[type]
-//        this.store.commit('changeNavType')
-//      },
+      sortByType: function (type, item) {
+        let param = [type, item[type]]
+        this.$store.commit(types.PIPE_TAG_PARAM, param)
+        this.tagItem = item[type]
+        console.log(this.tagItem)
+      },
       toggle: function (item) {
         this.type = item
       }
@@ -43,14 +54,14 @@
     created () {
       getTagList('category')
         .then((res) => {
-          this.CatList = res
+          this.CatList = [{category: '全部'}].concat(res)
         })
         .catch(err => {
           console.log(err)
         })
       getTagList('tag')
         .then((res) => {
-          this.TagList = res
+          this.TagList = [{tag: '全部'}].concat(res)
         })
         .catch(err => {
           console.log(err)
@@ -61,12 +72,13 @@
 <style lang='less' scoped>
   .tag {
     width: 220px;
-    float: right;
+    float: left;
     background-color: #effefe;
-    right: 0;
-    margin: 20px 108px auto 20px;
-    position: absolute;
+    margin-top: 50px;
+    margin-left: -311px;
+    user-select:none;
     .tag-header {
+      cursor: pointer;
       height: 40px;
       line-height: 40px;
       background-color: #fafafa;
@@ -75,14 +87,21 @@
       color: #494b48;
       font-weight: bold;
       font-family: monospace;
-      .h {
-        width: 108px;
-        height: 38px;
+      .tag-header {
+        width: 110px;
+        height: 40px;
         border: solid #efefef 1px;
+        background-color: #fafafa;
+      }
+      .tag-header:hover {
+        background-color: #66bcff;
+        color: #fff;
+        border: solid #66bcff 1px;
       }
       .h-chosen {
         color: #fff;
-        background-color: #00bad0;
+        background-color: #47afff;
+        border: solid #47afff 1px;
       }
       .h-left {
         float: left;
@@ -99,21 +118,25 @@
       .tag-list {
         padding: 10px;
         margin-bottom: 0;
+        cursor: pointer;
         .tag-item {
-          margin: 4px auto;
-          padding: 4px 8px;
-          border-radius: 4px;
+          padding: 2px 8px;
           color: #0b1802;
           font-size: 13px;
           list-style: none;
+          a {
+            padding: 4px;
+            border-radius: 2px;
+            display: inline-block;
+          }
         }
-        .item-chosen {
+        .item-chosen a {
           color: #fff;
-          background-color: #91c46b;
+          background-color: #53addd;
         }
-        .tag-item:hover {
+        .tag-item:hover a {
           color: #fff;
-          background-color: #a7d089;
+          background-color: #72c4f0;
         }
       }
     }

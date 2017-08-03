@@ -1,10 +1,12 @@
 <template>
-  <div class="art-container" v-if="item">
+  <div class="art-container">
     <div class="pic-box">
-      <img src="../../assets/images/pic-1.jpg">
+      <img v-if="!item.descImg" src="../../assets/images/pic-1.jpg">
+      <img v-else="item.descImg"
+                v-bind:src="'http://w-lab01.skyeye.shbt.qihoo.net:12312' + item.descImg"/>
     </div>
     <div class="text-box">
-      <headline :item="item" :is-main-page="isMainPage"></headline>
+      <headline :item="item"></headline>
       <tags :item="item"></tags>
       <div class="author lh32">
         <a>
@@ -14,7 +16,9 @@
       </div>
       <div class="brief">
         {{item.abstract}}
-        <a @click="enterPageById(item)">阅读全文</a>
+        <nuxt-link :to="'/articles/' + item._id" class="href" @click="enterPageById(item)">
+          阅读全文
+        </nuxt-link>
       </div>
     </div>
   </div>
@@ -23,13 +27,8 @@
 <script>
   import Tags from './Tags.vue'
   import Title from './Title.vue'
-
+  import * as types from '../../store/mutations.js'
   export default {
-    data () {
-      return {
-        isMainPage: true
-      }
-    },
     props: ['item'],
     components: {
       tags: Tags,
@@ -37,34 +36,43 @@
     },
     methods: {
       enterPageById: function (item) {
-        this.vConfig.isMainPage = false
-        this.$dispatch('change.isMainPage', false)
-        this.$dispatch('change.pageId', item._id)
+        this.$store.commit(types.PIPE_PAGE, item._id)
       }
     }
   }
 </script>
 <style lang="less" scoped>
   .art-container {
-    margin: 16px auto;
+    margin-top: 16px;
     padding-bottom: 16px;
     width: 100%;
-    height: 100%;
-    min-height: 200px;
+    height: 216px;
     position: relative;
     border-bottom: solid #efefef 1px;
     .text-box {
-      margin-left: 35%;
+      margin-left: 32%;
       top: 0;
       width: 65%;
+      .brief {
+        text-indent: 25px;
+      }
+      .href {
+        cursor: pointer;
+        color: #53addd;
+        text-indent: 25px;
+      }
     }
     .pic-box {
       width: 30%;
       max-height: 200px;
+      max-width: 300px;
       position: absolute;
       display: inline-block;
       top: 0;
       overflow: hidden;
+      img {
+        width: 100%;
+      }
     }
   }
   .lh32 {

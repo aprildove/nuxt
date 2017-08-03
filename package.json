@@ -7,7 +7,10 @@
   "dependencies": {
     "@nuxtjs/proxy": "^1.1.1",
     "axios": "^0.16.2",
+    "jquery": "^3.2.1",
+    "net": "^1.0.2",
     "nuxt": "latest",
+    "tls": "0.0.1",
     "vuex": "^2.3.1"
   },
   "scripts": {

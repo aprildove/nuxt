@@ -19,8 +19,9 @@
 
 <style lang="less" scoped>
   .disPic {
-    background: url(../../assets/images/banner.jpg);
-    background-color: #faa732;
+    background: url(../../assets/images/banner.png);
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 480px;
     .text {
       color: #fff;
