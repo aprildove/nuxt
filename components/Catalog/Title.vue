@@ -1,7 +1,7 @@
 <template>
   <div v-bind:class="{'title-home': isMainPage, 'title-detail': !isMainPage}"
        v-if="item" @click="enterPageById(item)">
-    <nuxt-link v-if="isMainPage" :to="'/articles/' + item._id" tag="div" >
+    <nuxt-link v-if="isMainPage" :to="'/articles/' + ( item.readableId || item._id )" tag="div" >
       {{item.title}}
     </nuxt-link>
     <template v-else>
@@ -20,7 +20,10 @@
     },
     methods: {
       enterPageById: function (item) {
-        this.$store.commit(types.PIPE_PAGE, item._id)
+        let isRid = item.readableId ? 1 : 0
+        let id = item.readableId || item._id
+        let param = [id, isRid]
+        this.$store.commit(types.PIPE_PAGE, param)
       }
     }
   }
@@ -42,5 +45,19 @@
     font-family: 'Arial Rounded MT Bold';
     margin-top: 48px;
     line-height: 64px;
+  }
+  @media screen and ( min-width: 550px ) and ( max-width: 950px) {
+    .title-home div {
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+    }
+  }
+  @media screen and (max-width: 550px ) {
+    .title-home div {
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+    }
   }
 </style>

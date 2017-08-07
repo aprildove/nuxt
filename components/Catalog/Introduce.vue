@@ -8,15 +8,15 @@
     <div class="text-box">
       <headline :item="item"></headline>
       <tags :item="item"></tags>
-      <div class="author lh32">
+      <div class="author">
         <a>
           <img src="../../assets/images/meditor-time.png">
         </a>
-        {{item.author}} on {{item.category}}
+        {{item.publish_time.substr(0, 10)}} , {{item.author}} ,{{item.category}} 
       </div>
       <div class="brief">
         {{item.abstract}}
-        <nuxt-link :to="'/articles/' + item._id" class="href" @click="enterPageById(item)">
+        <nuxt-link :to="'/articles/' + ( item.readableId || item._id )" class="href" @click="enterPageById(item)">
           阅读全文
         </nuxt-link>
       </div>
@@ -36,7 +36,8 @@
     },
     methods: {
       enterPageById: function (item) {
-        this.$store.commit(types.PIPE_PAGE, item._id)
+        let id = item.readableId || item._id
+        this.$store.commit(types.PIPE_PAGE, id)
       }
     }
   }
@@ -50,22 +51,32 @@
     position: relative;
     border-bottom: solid #efefef 1px;
     .text-box {
-      margin-left: 32%;
+      margin-left: 320px;
       top: 0;
-      width: 65%;
       .brief {
         text-indent: 25px;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
       .href {
         cursor: pointer;
         color: #53addd;
         text-indent: 25px;
       }
+      .author {
+        display: inline-block;
+        line-height: 32px;
+        img {
+          width: 16px;
+          height: 16px;
+        }
+      }
     }
     .pic-box {
-      width: 30%;
+      width: 300px;
       max-height: 200px;
-      max-width: 300px;
       position: absolute;
       display: inline-block;
       top: 0;
@@ -75,14 +86,28 @@
       }
     }
   }
-  .lh32 {
-    line-height: 32px;
+
+  /**
+     响应式布局
+   */
+  @media screen and ( min-width: 950px ) and ( max-width: 1250px) {
+    .art-container {
+      .text-box {
+        margin-left: 10px;
+      }
+      .pic-box {
+        width: 0;
+      }
+    }
   }
-  .author {
-    display: inline-block;
-    img {
-      width: 16px;
-      height: 16px;
+  @media screen and ( min-width: 200px ) and ( max-width: 950px) {
+    .art-container {
+      .text-box {
+        margin-left: 10px;
+      }
+      .pic-box {
+        width: 0;
+      }
     }
   }
 </style>

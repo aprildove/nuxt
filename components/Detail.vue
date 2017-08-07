@@ -7,9 +7,6 @@
       </div>
       <tags :item='articleData'></tags>
       <div class="author lh32">
-        <!--<a class="ico-time">-->
-          <!--<img src="../assets/images/meditor-time.png">-->
-        <!--</a>-->
         {{articleData.author}} on {{publishTime}}
       </div>
     </div>
@@ -61,8 +58,10 @@
        * 传入文章id来获取文章内容
        * @param id 文章id
        */
-      getArticleById: function (id) {
-        getById(id)
+      getArticleById: function (param) {
+        let id = param && param[0]
+        let isRid = param && param[1]
+        getById(id, isRid)
           .then((res) => {
             this.articleData = res
             let parent = document.getElementsByClassName('main-body')[0]
@@ -82,7 +81,9 @@
       },
       getPageId: function () {
         if (process.browser) {
-          return window.location.pathname.split('/').pop()
+          let id = window.location.pathname.split('/').pop()
+          let isRid = id.indexOf('-') > -1
+          return [id, isRid]
         }
       },
       /**
@@ -105,20 +106,20 @@
         }
       }
     },
-//    created () {
-//      let artId = this.getPageId()
-//      this.getArticleById(artId)
-//    },
-    asyncData () {
-      console.log('ffffffffffffffffffffffffffff')
-      return getById('597733a71c670a09e493ee37')
-        .then((res) => {
-          console.log(res, 'gggggggggggggg')
-        })
-        .catch(err => {
-          console.log(err)
-        })
+    created () {
+      let param = this.getPageId()
+      this.getArticleById(param)
     }
+//    asyncData () {
+//      console.log('ffffffffffffffffffffffffffff')
+//      return getById('597733a71c670a09e493ee37')
+//        .then((res) => {
+//          console.log(res, 'gggggggggggggg')
+//        })
+//        .catch(err => {
+//          console.log(err)
+//        })
+//    }
   }
 </script>
 <style lang='less' scoped>

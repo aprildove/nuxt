@@ -160,4 +160,39 @@
       cursor: default;
     }
   }
+  /**
+     响应式布局
+   */
+  @media screen and ( min-width: 950px ) and ( max-width: 1250px) {
+  }
+  @media screen and ( min-width: 550px ) and ( max-width: 950px) {
+    .main-part{
+      margin-right: 108px;
+      .paging {
+        margin-right: 108px;
+        .left, .right {
+          width: 25%;
+        }
+        .mid {
+          margin: auto 30%;
+        }
+      }
+    }
+  }
+  @media screen and ( min-width: 200px ) and ( max-width: 550px ) {
+    .main-part, .paging {
+      margin: 20px 40px;
+      .art-list {
+        margin: 0;
+      }
+    }
+    .paging {
+      .left, .right {
+        width: 25%;
+      }
+      .mid {
+        margin: auto 30%;
+      }
+    }
+  }
 </style>

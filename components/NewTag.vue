@@ -1,10 +1,10 @@
 <template>
   <div class='tag' v-if='isMainPage'>
     <div class="tag-header">
-      <div class="tag-header h-left" :class="{ 'h-chosen' : type == 'catList'}"
-           @click="toggle('catList')">类别</div>
-      <div class="tag-header h-right" :class="{ 'h-chosen' : type == 'tagList'}"
+      <div class="tag-header h-left" :class="{ 'h-chosen' : type == 'tagList'}"
            @click="toggle('tagList')">标签</div>
+      <div class="tag-header h-right" :class="{ 'h-chosen' : type == 'catList'}"
+           @click="toggle('catList')">类别</div>
     </div>
     <div class="tag-body">
       <ul class="tag-list">
@@ -14,7 +14,7 @@
           <a>
             {{item.category}}
           </a>
-          </li>
+        </li>
         <li class="tag-item" :class="{'item-chosen': tagItem == item.tag }"
             v-if="type == 'tagList'" v-for='item in TagList'
             @click="sortByType('tag', item)">
@@ -33,7 +33,7 @@
       return {
         CatList: [],
         TagList: [],
-        type: 'catList',
+        type: 'tagList',
         tagItem: '全部'
       }
     },
@@ -139,6 +139,16 @@
           background-color: #72c4f0;
         }
       }
+    }
+  }
+  @media screen and ( min-width: 550px ) and ( max-width: 950px) {
+    .tag {
+      visibility: hidden;
+    }
+  }
+  @media screen and (max-width: 550px ) {
+    .tag {
+      visibility: hidden;
     }
   }
 </style>
