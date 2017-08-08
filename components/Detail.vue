@@ -17,6 +17,7 @@
   </div>
 </template>
 <script>
+  import $ from 'jquery'
   import Tags from './Catalog/Tags.vue'
   import Title from './Catalog/Title.vue'
   import Footer from './Detail/footer.vue'
@@ -109,17 +110,19 @@
     created () {
       let param = this.getPageId()
       this.getArticleById(param)
+    },
+    updated () {
+      if (process.browser) {
+        $('.hljs code').each(function (i, block) {
+          var lines = $(this).text().split('\n').length - 1
+          var $numbering = $('<ul/>').addClass('pre-numbering')
+          $(this).addClass('has-numbering').parent().append($numbering)
+          for (i = 1; i <= lines; i++) {
+            $numbering.append($('<li/>').text(i))
+          }
+        })
+      }
     }
-//    asyncData () {
-//      console.log('ffffffffffffffffffffffffffff')
-//      return getById('597733a71c670a09e493ee37')
-//        .then((res) => {
-//          console.log(res, 'gggggggggggggg')
-//        })
-//        .catch(err => {
-//          console.log(err)
-//        })
-//    }
   }
 </script>
 <style lang='less' scoped>

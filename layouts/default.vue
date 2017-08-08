@@ -3,8 +3,54 @@
     <nuxt/>
   </div>
 </template>
-
+<script>
+  import '../plugins/hljs/highlightjs-solarized-dark.css'
+  export default {
+  }
+</script>
 <style lang="less">
+
+// 滚动条整体部分，可以设置宽度
+.hljs {
+    ::-webkit-scrollbar {  
+    width: 8px;  
+    height: 10px;  
+    border-radius: 2px;
+    background-color: #839496;  
+  }  
+  // 滚动条外层轨道 内阴影+圆角  
+  ::-webkit-scrollbar-track { 
+    border-radius: 2px; 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  
+    background-color: #BEBEBE;// #839496;  
+  }  
+  // 滚动的滑块 内阴影+圆角
+  ::-webkit-scrollbar-thumb {  
+    border-radius: 2px;  
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
+    background-color: #778899;// #175f87;  
+  }  
+}
+
+/*滚动条 
+::-webkit-scrollbar-thumb:hover {  
+  border-radius: 3px;  
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
+  background-color:rgba(7, 170, 247, 1);  
+} 
+*/  
+/*
+// 内层滚动槽
+::-webkit-scrollbar-track-piece {
+  border-radius: 3px;
+}
+// 边角
+::-webkit-scrollbar-corner {
+}
+// 右下角拖动块的样式
+::-webkit-resizer {
+}
+*/
 html
 {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -67,37 +113,6 @@ html
 
   code, kbd, pre, samp {
     font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  }
-
-  code {
-    word-break: break-all;
-    padding: 0.2rem 0.4rem;
-    font-size: 90%;
-    color: #bd4147;
-    background-color: #f8f9fa;
-    border-radius: 0.25rem;
-  }
-
-  pre {
-    display: block;
-    padding: 9.5px;
-    margin: 0 0 10px;
-    font-size: 13px;
-    line-height: 1.42857143;
-    color: #333;
-    word-break: break-all;
-    word-wrap: break-word;
-    background-color: #f5f5f5;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    white-space: pre-wrap !important;
-    page-break-inside: avoid;
-    code {
-      font-size: inherit;
-      color: inherit;
-      background-color: transparent;
-      border-radius: 0;
-    }
   }
 }
 </style>

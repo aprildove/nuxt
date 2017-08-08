@@ -33,11 +33,11 @@ export const getCat = function (page, type, itemName) {
  * @param id           文章id
  * @returns {Promise}  返回结果
  */
-export const getById = function (id) {
+export const getById = function (id, isRid) {
   return new Promise((resolve, reject) => {
-    getFun.get('/api/v1/article/find/id/' + id)
+    let idType = isRid ? 'rid/' : 'id/'
+    getFun.get('/api/v1/article/find/' + idType + id)
       .then(function (res) {
-        console.log('fffffffffffffffff')
         resolve(res.data.msg)
       })
       .catch(function (err) {

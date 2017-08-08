@@ -77,6 +77,7 @@
     .pic-box {
       width: 300px;
       max-height: 200px;
+      border-radius: 5px;
       position: absolute;
       display: inline-block;
       top: 0;

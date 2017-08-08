@@ -5,7 +5,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'starter',
+    title: '360威胁情报中心',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -32,7 +32,7 @@ module.exports = {
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
-          exclude: /(node_modules)/
+          exclude: /(node_modules|plugins)/
         })
       }
     },
@@ -85,5 +85,11 @@ module.exports = {
         })
       }
     }
-  }
+  },
+  plugins: [
+    {
+      src: '~plugins/hljs/highlightjs.min.js',
+      ssr: false
+    }
+  ]
 }
