@@ -1,6 +1,6 @@
 import * as types from './mutations.js'
-export const pipePage = function (store, id) {
-  store.commit(types.PIPE_PAGE, id)
+export const pipePageId = function (store, paramId) {
+  store.commit(types.PIPE_PAGE_ID, paramId)
 }
 export const pipeTagParam = function (store, param) {
   store.commit(types.PIPE_TAG_PARAM, param)
@@ -10,4 +10,7 @@ export const pipeIsMainPage = function (store, flag) {
 }
 export const pipeToTalPage = function (store, num) {
   store.commit(types.PIPE_TOTAL_PAGE, num)
+}
+export const pipeArticleData = function (store, articleData) {
+  store.commit(types.PIPE_ARTICLE_DATA, articleData)
 }

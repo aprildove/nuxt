@@ -27,7 +27,7 @@
 <script>
   import Tags from './Tags.vue'
   import Title from './Title.vue'
-  import * as types from '../../store/mutations.js'
+  import { mapActions } from 'vuex'
   export default {
     props: ['item'],
     components: {
@@ -35,9 +35,12 @@
       headline: Title
     },
     methods: {
+      ...mapActions(['pipePageId']),
       enterPageById: function (item) {
+        let isRid = item.readableId ? 1 : 0
         let id = item.readableId || item._id
-        this.$store.commit(types.PIPE_PAGE, id)
+        let param = [id, isRid]
+        this.pipePageId(param)
       }
     }
   }

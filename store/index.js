@@ -6,15 +6,16 @@ import * as actions from './action.js'
 Vue.use(Vuex)
 
 const state = {
-  pageId: '',
+  pageId: [],
   tagParam: [],
   isMainPage: true,
-  totalPage: 1
+  totalPage: 1,
+  articleData: {}
 }
 
 const mutations = {
-  [types.PIPE_PAGE] (state, id) {
-    state.pageId = id
+  [types.PIPE_PAGE_ID] (state, param) {
+    state.pageId = param
   },
   [types.PIPE_TAG_PARAM] (state, param) {
     state.tagParam = param
@@ -24,6 +25,9 @@ const mutations = {
   },
   [types.PIPE_TOTAL_PAGE] (state, num) {
     state.totalPage = num
+  },
+  [types.PIPE_ARTICLE_DATA] (state, articleData) {
+    state.articleData = articleData
   }
 }
 

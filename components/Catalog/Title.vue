@@ -11,19 +11,19 @@
 </template>
 <script>
   import './Introduce.vue'
-  import * as types from '../../store/mutations.js'
-  import { mapState } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   export default {
     props: ['item'],
     computed: {
-      ...mapState(['pageId', 'isMainPage'])
+      ...mapState(['isMainPage'])
     },
     methods: {
+      ...mapActions(['pipePageId']),
       enterPageById: function (item) {
         let isRid = item.readableId ? 1 : 0
         let id = item.readableId || item._id
         let param = [id, isRid]
-        this.$store.commit(types.PIPE_PAGE, param)
+        this.pipePageId(param)
       }
     }
   }

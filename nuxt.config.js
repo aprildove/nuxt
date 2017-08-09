@@ -72,7 +72,7 @@ module.exports = {
           return getArtId.get(portId)
             .then((res) => {
               return list.concat(res.data.msg.map((item) => {
-                return '/articles/' + item._id
+                return '/articles/' + (item.readableId || item._id)
               }))
             })
             .catch((err) => {

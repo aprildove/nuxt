@@ -80,7 +80,7 @@ html
   img {
     vertical-align: middle;
     border-style: none;
-    margin: 32px 20px auto auto;
+    margin: auto 20px auto auto;
   }
 
   .text-center {

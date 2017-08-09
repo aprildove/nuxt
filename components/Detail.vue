@@ -10,7 +10,7 @@
         {{articleData.author}} on {{publishTime}}
       </div>
     </div>
-    <div class='main-body'>
+    <div class='main-body' v-html="articleData.content">
     </div>
     <!--去掉footer组件，star的需求-->
     <!--<main-footer :item="articleData"></main-footer>-->
@@ -20,16 +20,12 @@
   import $ from 'jquery'
   import Tags from './Catalog/Tags.vue'
   import Title from './Catalog/Title.vue'
-  import Footer from './Detail/footer.vue'
-  import { getById } from '../static/api.js'
   import { mapState } from 'vuex'
   export default {
     data () {
       return {
         readMore: 'Read',
         isMainPage: false,
-        articleData: {},
-        artId: [],
         publishTime: ''
       }
     },
@@ -39,15 +35,9 @@
       mainFooter: Footer
     },
     computed: {
-      ...mapState(['pageId'])
+      ...mapState(['articleData'])
     },
     watch: {
-      pageId (now, old) {
-        if (now) {
-          console.log('this is now', now, 'this is old', old)
-          this.getArticleById(now)
-        }
-      },
       articleData: function (now, old) {
         if (now) {
           this.publishTime = now.publish_time.substr(0, 10)
@@ -55,61 +45,16 @@
       }
     },
     methods: {
-      /*
-       * 传入文章id来获取文章内容
-       * @param id 文章id
-       */
-      getArticleById: function (param) {
-        let id = param && param[0]
-        let isRid = param && param[1]
-        getById(id, isRid)
-          .then((res) => {
-            this.articleData = res
-            let parent = document.getElementsByClassName('main-body')[0]
-            this.append(parent, res.content)
-            this.convertImgSrc()
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      },
       convertImgSrc: function () {
-        let nodes = document.querySelectorAll('.main-body img')
-        nodes.forEach(function (e) {
-          let newUrl = 'http://w-lab01.skyeye.shbt.qihoo.net:12312/' + e.src.substr(e.src.indexOf('/uploads'))
-          e.src = newUrl
-        })
-      },
-      getPageId: function () {
         if (process.browser) {
-          let id = window.location.pathname.split('/').pop()
-          let isRid = id.indexOf('-') > -1
-          return [id, isRid]
-        }
-      },
-      /**
-       * Javascrit原生实现jquery的append()函数
-       * @param parent
-       * @param text
-       */
-      append: function (parent, text) {
-        if (typeof text === 'string') {
-          let temp = document.createElement('div')
-          temp.innerHTML = text
-          // 防止元素太多 进行提速
-          let frag = document.createDocumentFragment()
-          while (temp.firstChild) {
-            frag.appendChild(temp.firstChild)
-          }
-          parent.appendChild(frag)
-        } else {
-          parent.appendChild(text)
+          let nodes = document.querySelectorAll('.main-body img')
+          nodes.forEach(function (e) {
+            let newUrl = 'http://w-lab01.skyeye.shbt.qihoo.net:12312/' + e.src.substr(e.src.indexOf('/uploads'))
+            e.src = newUrl
+            console.log(newUrl, 'ggg-new Url')
+          })
         }
       }
-    },
-    created () {
-      let param = this.getPageId()
-      this.getArticleById(param)
     },
     updated () {
       if (process.browser) {
