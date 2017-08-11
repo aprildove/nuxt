@@ -1,9 +1,9 @@
 <template>
   <div v-bind:class="{'title-home': isMainPage, 'title-detail': !isMainPage}"
        v-if="item" @click="enterPageById(item)">
-    <nuxt-link v-if="isMainPage" :to="'/articles/' + ( item.readableId || item._id )" tag="div" >
+    <a v-if="isMainPage" :href="'/articles/' + ( item.readableId || item._id )" tag="div" >
       {{item.title}}
-    </nuxt-link>
+    </a>
     <template v-else>
       {{item.title}}
     </template>

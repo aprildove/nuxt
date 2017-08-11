@@ -12,7 +12,7 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/fav.ico' }
     ]
   },
   /*
@@ -39,6 +39,14 @@ module.exports = {
     vendor: ['axios', 'jquery']
   },
   generate: {
+  //   routes: [
+  //    '/articles/gaza-cybergang-apt-sample',
+  //   '/articles/analysis-of-petya-boot-code',
+  //   '/articles/Template_Injection_Attack_Behind_Template_Threat',
+  //   '/articles/fin7-apt-campaign-backdoor-analysis',
+  //   '/articles/darkcloud3-botnet-technical-analysis',
+  //   '/pages/2'
+  // ]
     routes: function (callback) {
       let list = []
       let port = '/api/v1/article/list'
@@ -79,7 +87,7 @@ module.exports = {
               console.log('this port %s err is $s', port, err)
             })
         })).then((res) => {
-          let idArr = res.reduce((c, d) => { return c.concat(d) })
+          let idArr = res.reduce((c, d) => { return c.concat(d) }).concat('/pages/2')
           callback(null, idArr)
           console.log(idArr, 'aaa--idArr')
         })

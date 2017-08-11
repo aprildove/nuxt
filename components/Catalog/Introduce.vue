@@ -16,14 +16,13 @@
       </div>
       <div class="brief">
         {{item.abstract}}
-        <nuxt-link :to="'/articles/' + ( item.readableId || item._id )" class="href" @click="enterPageById(item)">
+        <a :href="'/articles/' + ( item.readableId || item._id )" class="href" @click="enterPageById(item)">
           阅读全文
-        </nuxt-link>
+        </a>
       </div>
     </div>
   </div>
 </template>
-
 <script>
   import Tags from './Tags.vue'
   import Title from './Title.vue'
@@ -52,7 +51,7 @@
     width: 100%;
     height: 216px;
     position: relative;
-    border-bottom: solid #efefef 1px;
+    border-bottom: solid #deded7 1px;
     .text-box {
       margin-left: 320px;
       top: 0;

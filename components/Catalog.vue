@@ -3,17 +3,15 @@
     <div class="main-part">
       <div class="art-list">
         <introduce
-          v-for="item in catList" :key="item._id" :item="item"></introduce>
+          v-for="item in catContent.msg" :key="item._id" :item="item"></introduce>
       </div>
-      <div class="paging">
-        <div class="left pag-btn"  @click="togBtnDown('new')"
-             :class="{'btn-unable': curPage < 2 }">
+      <div class="paging" v-show="isShowPaging">
+        <a class="left pag-btn" :class="{'btn-unable': curPage < 2 }" :href="'/'" @click="togBtnDown('before')">
           上一页
-        </div>
-        <div class="right pag-btn"  @click="togBtnDown('old')"
-             :class="{'btn-unable': curPage >= totalPage }">
+        </a>
+        <a class="right pag-btn" :class="{'btn-unable': curPage >= totalPage }" :href="'/pages/' + this.curPage" @click="togBtnDown('next')">
           下一页
-        </div>
+        </a>
         <div class="mid">
           第 {{ curPage }}/{{ totalPage }} 页
         </div>
@@ -23,58 +21,50 @@
 </template>
 <script>
   import Introduce from './Catalog/Introduce.vue'
-  import { getCat } from '../static/api.js'
-  import { mapState } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   export default {
     data: function () {
       return {
-        catList: [],
         curPage: 1,
-        totalPage: 1
+        totalPage: 1,
+        isShowPaging: true
       }
     },
+    props: ['catContent'],
     computed: {
-      ...mapState(['tagParam', 'isMainPage'])
+      ...mapState(['tagParam', 'isMainPage', 'pageNum'])
     },
     watch: {
       tagParam (now) {
-        this.getCateList(1, now)
+        this.isShowPaging = now[1] === '全部'
       }
     },
     components: {
       introduce: Introduce
     },
     methods: {
+      ...mapActions(['pipePageNum']),
       togBtnDown: function (type) {
-        if (type === 'new') {
+        if (type === 'before') {
           if (this.curPage > 1) {
             this.curPage -= 1
-            this.getCateList(this.curPage)
+            this.pipePageNum([this.curPage, 2])
           }
-        } else if (type === 'old') {
+        } else if (type === 'next') {
           if (this.curPage < this.totalPage) {
             this.curPage += 1
-            this.getCateList(this.curPage)
+            this.pipePageNum([this.curPage, 2])
           }
         }
-      },
-      getCateList (page, param) {
-        let type = param && param[0]
-        let itemName = param && param[1]
-        if (itemName === '全部') {
-          type = itemName = null
-        }
-        getCat(page, type, itemName)
-          .then((data) => {
-            this.catList = data.msg
-            this.totalPage = data.pageTotal
-          }).catch(err => {
-            console.log(err)
-          })
       }
     },
     created () {
-      this.getCateList(1)
+      if (process.browser) {
+        let path = window.location.pathname
+        let num = path && path.split('/')[2]
+        this.curPage = num || this.pageNum[0]
+        this.totalPage = this.pageNum[1]
+      }
     }
   }
 </script>
@@ -119,12 +109,6 @@
     }
     .pag-btn:hover, .pag-btn:active, .btn-unable, .btn-unable:hover {
       color: #fff;
-      /*.lArror {*/
-        /*background-image: url('../assets/images/arror-left-grey.svg');*/
-      /*}*/
-      /*.rArror {*/
-        /*background-image: url('../assets/images/arror-right-grey.svg');*/
-      /*}*/
     }
     .pag-btn:hover {
       background-color: #72c4f0;

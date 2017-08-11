@@ -1,17 +1,16 @@
 <template>
   <div>
     <div class="nav-bar">
-      <nuxt-link to="/">
+      <a :href="'/'">
         <img class="ico-favicon" src="../assets/images/blog-icon.png"/>
-      </nuxt-link>
-      <nuxt-link to="/">
+      </a>
+      <a :href="'/'">
           <img class="ico-home" src="../assets/images/home.png"/>
-      </nuxt-link>
+      </a>
     </div>
     <dis-pic v-if="isMainPage"></dis-pic>
   </div>
 </template>
-
 <script>
   import DisPic from './Header/DisPic.vue'
   import { mapState } from 'vuex'

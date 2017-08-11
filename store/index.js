@@ -9,7 +9,7 @@ const state = {
   pageId: [],
   tagParam: [],
   isMainPage: true,
-  totalPage: 1,
+  pageNum: [1, 2], // [当前页数，总页数]
   articleData: {}
 }
 
@@ -23,8 +23,8 @@ const mutations = {
   [types.PIPE_IS_MAIN_PAGE] (state, flag) {
     state.isMainPage = flag
   },
-  [types.PIPE_TOTAL_PAGE] (state, num) {
-    state.totalPage = num
+  [types.PIPE_PAGE_NUM] (state, param) {
+    state.pageNum = param
   },
   [types.PIPE_ARTICLE_DATA] (state, articleData) {
     state.articleData = articleData

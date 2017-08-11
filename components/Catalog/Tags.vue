@@ -24,5 +24,6 @@
     font-family: 'sans-serif';
     padding: 2px 6px;
     margin-right: 8px;
+    border-radius: 2px;
   }
 </style>

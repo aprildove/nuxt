@@ -19,7 +19,7 @@
 
 <style lang="less" scoped>
   .disPic {
-    background: url(../../assets/images/banner.png);
+    background: url(../../assets/images/banner2.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     height: 480px;

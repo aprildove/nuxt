@@ -8,8 +8,8 @@ export const pipeTagParam = function (store, param) {
 export const pipeIsMainPage = function (store, flag) {
   store.commit(types.PIPE_IS_MAIN_PAGE, flag)
 }
-export const pipeToTalPage = function (store, num) {
-  store.commit(types.PIPE_TOTAL_PAGE, num)
+export const pipePageNum = function (store, param) {
+  store.commit(types.PIPE_PAGE_NUM, param)
 }
 export const pipeArticleData = function (store, articleData) {
   store.commit(types.PIPE_ARTICLE_DATA, articleData)

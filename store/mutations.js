@@ -1,5 +1,5 @@
 export const PIPE_PAGE_ID = 'PIPE_PAGE_ID'
 export const PIPE_TAG_PARAM = 'PIPE_TAG_PARAM'
 export const PIPE_IS_MAIN_PAGE = 'PIPE_IS_MAIN_PAGE'
-export const PIPE_TOTAL_PAGE = 'PIPE_TOTAL_PAGE'
+export const PIPE_PAGE_NUM = 'PIPE_PAGE_NUM'
 export const PIPE_ARTICLE_DATA = 'PIPE_ARTICLE_DATA'

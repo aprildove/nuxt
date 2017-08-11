@@ -8,64 +8,47 @@
     </div>
     <div class="tag-body">
       <ul class="tag-list">
-        <li class="tag-item" :class="{'item-chosen': tagItem == item.category}"
-            v-if="(type == 'catList') && item.category" v-for='item in CatList'
-            @click="sortByType('category', item)">
+        <li class="tag-item" :class="{'item-chosen': tagItem == item.tag }"
+            v-if="type == 'tagList'" v-for='item in tagAllList[0]'
+            @click="sortByType('tag', item)">
           <a>
-            {{item.category}}
+            {{item.tag.toUpperCase()}}
           </a>
         </li>
-        <li class="tag-item" :class="{'item-chosen': tagItem == item.tag }"
-            v-if="type == 'tagList'" v-for='item in TagList'
-            @click="sortByType('tag', item)">
-          <a>{{item.tag}}</a>
+        <li class="tag-item" :class="{'item-chosen': tagItem == item.category}"
+            v-if="(type == 'catList') && item.category" v-for='item in tagAllList[1]'
+            @click="sortByType('category', item)">
+          <a>
+            {{item.category.toUpperCase()}}
+          </a>
         </li>
       </ul>
     </div>
   </div>
 </template>
 <script>
-  import { getTagList } from '../static/api.js'
-  import * as types from '../store/mutations.js'
-  import { mapState } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   export default {
     data () {
       return {
-        CatList: [],
-        TagList: [],
         type: 'tagList',
         tagItem: '全部'
       }
     },
+    props: ['tagAllList'],
     computed: {
       ...mapState(['isMainPage'])
     },
     methods: {
+      ...mapActions(['pipeTagParam']),
       sortByType: function (type, item) {
         let param = [type, item[type]]
-        this.$store.commit(types.PIPE_TAG_PARAM, param)
+        this.pipeTagParam(param)
         this.tagItem = item[type]
-        console.log(this.tagItem)
       },
       toggle: function (item) {
         this.type = item
       }
-    },
-    created () {
-      getTagList('category')
-        .then((res) => {
-          this.CatList = [{category: '全部'}].concat(res)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-      getTagList('tag')
-        .then((res) => {
-          this.TagList = [{tag: '全部'}].concat(res)
-        })
-        .catch(err => {
-          console.log(err)
-        })
     }
   }
 </script>
@@ -112,7 +95,8 @@
     }
     .tag-body {
       border: solid #efefef 1px;
-      background-color: white;
+      // background-color: white;
+      background-color: #f0f0e3;
       border-bottom-left-radius: 1px;
       border-bottom-right-radius: 1px;
       .tag-list {

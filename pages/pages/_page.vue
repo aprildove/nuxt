@@ -8,10 +8,10 @@
   </section>
 </template>
 <script>
-  import { getTagList, getCat } from '../static/api.js'
-  import Nav from '../components/Navigation.vue'
-  import Tag from '../components/NewTag.vue'
-  import Catalog from '../components/Catalog.vue'
+  import { getCat, getTagList } from '../../static/api.js'
+  import Nav from '../../components/Navigation.vue'
+  import Tag from '../../components/NewTag.vue'
+  import Catalog from '../../components/Catalog.vue'
   import { mapActions, mapState } from 'vuex'
   export default {
     data: function () {
@@ -35,15 +35,14 @@
         getCat(page, type, itemName)
           .then((data) => {
             this.catContent = data
-            let pageTotal = 1
-            this.pipePageNum([1, pageTotal])
+            this.totalPage = data.pageTotal
           }).catch(err => {
             console.log(err)
           })
       }
     },
     computed: {
-      ...mapState(['tagParam'])
+      ...mapState(['pageNum', 'tagParam'])
     },
     watch: {
       tagParam (now) {
@@ -53,17 +52,16 @@
     created () {
       this.pipeIsMainPage(true)
       this.catContent = this.tagAllList[2]
-      let pageTotal = this.catContent.pageTotal
-      this.pipePageNum([1, pageTotal])
     },
     asyncData (context) {
+      let num = context.params.page
       let tag = getTagList('tag').then((res) => {
         return [{'tag': '全部'}].concat(res)
       })
       let cate = getTagList('category').then((res) => {
         return [{'category': '全部'}].concat(res)
       })
-      let cat = getCat(1).then((res) => {
+      let cat = getCat(num).then((res) => {
         return res
       })
       return Promise.all([tag, cate, cat]).then((res) => {
