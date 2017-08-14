@@ -44,7 +44,7 @@ html
   box-sizing: border-box;
 }
 body {
-  background-color: #f0f0e3;
+  background-color: rgba(66, 66, 66, 0.05);// #f0f0e3;
 }
 *, *:before, *:after
 {
@@ -68,6 +68,7 @@ a:active {color: #0b1802} /* 选定的链接 */
     margin-bottom: 1rem;
     font-size: 15px;
     text-indent: 25px;
+    word-wrap:break-word;
   }
   img {
     vertical-align: middle;

@@ -56,7 +56,6 @@
   .tag {
     width: 220px;
     float: left;
-    background-color: #effefe;
     margin-top: 50px;
     margin-left: -311px;
     user-select:none;
@@ -64,7 +63,6 @@
       cursor: pointer;
       height: 40px;
       line-height: 40px;
-      background-color: #fafafa;
       text-align: center;
       font-size: 15px;
       color: #494b48;
@@ -95,8 +93,6 @@
     }
     .tag-body {
       border: solid #efefef 1px;
-      // background-color: white;
-      background-color: #f0f0e3;
       border-bottom-left-radius: 1px;
       border-bottom-right-radius: 1px;
       .tag-list {

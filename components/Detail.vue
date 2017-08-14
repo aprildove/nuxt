@@ -37,6 +37,7 @@
     watch: {
       articleData: function (now, old) {
         if (now) {
+          console.log('zz-articleData')
           this.publishTime = now.publish_time.substr(0, 10)
         }
       }
@@ -59,11 +60,11 @@
           var lines = $(this).text().split('\n').length - 1
           var $numbering = $('<ul/>').addClass('pre-numbering')
           $(this).addClass('has-numbering').parent().append($numbering)
-          console.log($(this).addClass('has-numbering').parent(), 'zz')
           for (i = 1; i <= lines; i++) {
             $numbering.append($('<li/>').text(i))
           }
         })
+        this.publishTime = this.articleData.publish_time.substr(0, 10)
       }
     }
   }
@@ -85,13 +86,13 @@
       .title {
         font-size: 48px;
         color: #0b1802;
-        font-family: "Verdana, 微软雅黑, 宋体, Geneva, 'sans-serif'";// 'Arial Rounded MT Bold';
+        font-family: "Verdana, 微软雅黑, 宋体, Geneva, 'sans-serif'";
       }
       .author {
         display: inline-block;
         color: #979996;
         font-size: 16px;
-        font-family: "Verdana, 微软雅黑, 宋体, Geneva, 'sans-serif'"; // 'Arial Rounded MT Bold';
+        font-family: "Verdana, 微软雅黑, 宋体, Geneva, 'sans-serif'";
         margin: 12px 7px 12px 0;
         line-height: 16px;
         .ico-time img {
