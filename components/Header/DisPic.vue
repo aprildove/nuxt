@@ -11,7 +11,7 @@
       return {
         text1: '数据驱动安全',
         text2: '360威胁情报研究',
-        text3: '————————  T h r e a t   I n t e l l i g e n c e    B a s e d    o n    D a t a    a n d    A n a l y s i s  ————————'
+        text3: '————————  dig deep into security  ————————'
       }
     }
   }
@@ -41,7 +41,7 @@
     }
     .line3 {
       margin-top: 51px;
-      font-size: 20px;
+      font-size: 27px;
       font-family: 'LilyUPC';
       white-space: pre;
     }

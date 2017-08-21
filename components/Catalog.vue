@@ -2,14 +2,19 @@
   <div class="left-con">
     <div class="main-part">
       <div class="art-list">
-        <introduce
-          v-for="item in catContent.msg" :key="item._id" :item="item"></introduce>
+        <introduce v-for="item in catContent.msg" 
+          :key="item._id" :item="item"></introduce>
+      </div>
+      <div>
+        <p v-for="i in catContent[0]">
+          
+        </p>
       </div>
       <div class="paging" v-show="isShowPaging">
         <a class="left pag-btn" :class="{'btn-unable': curPage < 2 }" :href="'/'" @click="togBtnDown('before')">
           上一页
         </a>
-        <a class="right pag-btn" :class="{'btn-unable': curPage >= totalPage }" :href="'/pages/' + this.curPage" @click="togBtnDown('next')">
+        <a class="right pag-btn" :class="{'btn-unable': curPage >= totalPage }" :href="'/pages/2'" @click="togBtnDown('next')">
           下一页
         </a>
         <div class="mid">
@@ -33,11 +38,6 @@
     props: ['catContent'],
     computed: {
       ...mapState(['tagParam', 'isMainPage', 'pageNum'])
-    },
-    watch: {
-      tagParam (now) {
-        this.isShowPaging = now[1] === '全部'
-      }
     },
     components: {
       introduce: Introduce
@@ -64,6 +64,9 @@
         let num = path && path.split('/')[2]
         this.curPage = num || this.pageNum[0]
         this.totalPage = this.pageNum[1]
+        if () {
+          this.isShowPaging = false
+        }
       }
     }
   }

@@ -16,7 +16,7 @@ getFun.defaults.headers.common['X-Token'] = '4b435e5175092e040d98c15992cfc23b'
 export const getCat = function (page, type, itemName) {
   return new Promise((resolve, reject) => {
     let normalList = '/api/v1/article/list/' + page
-    let catList = '/api/v1/article/find/' + type + '/' + itemName + '/' + page
+    let catList = '/api/v1/article/find/' + type + '/' + encodeURI(itemName) + '/' + page
     let port = type ? catList : normalList
     getFun.get(port)
       .then(function (res) {

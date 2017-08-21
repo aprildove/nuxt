@@ -9,14 +9,14 @@
     <div class="tag-body">
       <ul class="tag-list">
         <li class="tag-item" :class="{'item-chosen': tagItem == item.tag }"
-            v-if="type == 'tagList'" v-for='item in tagAllList[0]'
+            v-show="type == 'tagList'" v-for='item in tagAllList[0]'
             @click="sortByType('tag', item)">
           <a>
             {{item.tag.toUpperCase()}}
           </a>
         </li>
         <li class="tag-item" :class="{'item-chosen': tagItem == item.category}"
-            v-if="(type == 'catList') && item.category" v-for='item in tagAllList[1]'
+            v-show="(type == 'catList') && item.category" v-for='item in tagAllList[1]'
             @click="sortByType('category', item)">
           <a>
             {{item.category.toUpperCase()}}
@@ -45,10 +45,29 @@
         let param = [type, item[type]]
         this.pipeTagParam(param)
         this.tagItem = item[type]
+        if (process.browser) {
+          let path = '/' + type + '/' + encodeURI(this.tagItem)
+          window.location.pathname = path
+        }
       },
       toggle: function (item) {
         this.type = item
       }
+    },
+    created () {
+      if (process.browser) {
+        let path = window.location.pathname
+        let tagType = path.split('/')[1]
+        let item = this.contextType || path.split('/')[2]
+        let isChosenTag = tagType === 'tag' || tagType === 'category'
+        if (isChosenTag) {
+          this.type = tagType === 'tag' ? 'tagList' : 'catList'
+          this.tagItem = decodeURI(item)
+        }
+      }
+    },
+    asyncData (context) {
+      return {contextType: context.params.type}
     }
   }
 </script>

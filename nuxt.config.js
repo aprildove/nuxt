@@ -39,59 +39,86 @@ module.exports = {
     vendor: ['axios', 'jquery']
   },
   generate: {
-  //   routes: [
-  //    '/articles/gaza-cybergang-apt-sample',
-  //   '/articles/analysis-of-petya-boot-code',
-  //   '/articles/Template_Injection_Attack_Behind_Template_Threat',
-  //   '/articles/fin7-apt-campaign-backdoor-analysis',
-  //   '/articles/darkcloud3-botnet-technical-analysis',
-  //   '/pages/2'
-  // ]
     routes: function (callback) {
-      let list = []
-      let port = '/api/v1/article/list'
+      let artList = []
+      let tagList = []
+      let catList = []
+      let pageList = []
+      let port = '/api/v1/'
       let pageTotal = 2
-      let test = false
       let getArtId = axios.create()
       getArtId.defaults.baseURL = 'http://w-lab01.skyeye.shbt.qihoo.net:12312'
       getArtId.defaults.headers.common['X-Token'] = '4b435e5175092e040d98c15992cfc23b'
-      if (test) {
-        getArtId.get(port)
-          .then(() => {
-          })
-          .catch((err) => {
-            console.log('this port %s err is $s', port, err)
-          })
-      } else {
-        /**
-         * 得到所有的文章页数
-         * 先拿到页数，router再接收promise.all返回所有id和callback，
-         */
-        let otherURL = new Array(pageTotal)
-        let j = 0
-        for (let i = 1, len = pageTotal; i <= len; i++) {
-          otherURL[j++] = port + '/' + i
+      
+      /**
+       * 得到所有的文章页数
+       * 先拿到页数，router再接收promise.all返回所有id和callback，
+       */
+      let pageUrlArr = new Array(pageTotal)
+      let j = 0
+      for (let i = 1, len = pageTotal; i <= len; i++) {
+        pageUrlArr[j++] = port + 'article/list' + '/' + i
+        if (i >= 2) {
+          pageList.push('/pages/'+ i)
         }
-        console.log('otherURL', otherURL)
-        /**
-         * 得到所有的文章id
-         */
-        Promise.all(otherURL.map((portId) => {
-          return getArtId.get(portId)
-            .then((res) => {
-              return list.concat(res.data.msg.map((item) => {
-                return '/articles/' + (item.readableId || item._id)
-              }))
-            })
-            .catch((err) => {
-              console.log('this port %s err is $s', port, err)
-            })
-        })).then((res) => {
-          let idArr = res.reduce((c, d) => { return c.concat(d) }).concat('/pages/2')
-          callback(null, idArr)
-          console.log(idArr, 'aaa--idArr')
-        })
       }
+
+      // Promise.all(pageUrlArr.map((portId) => {
+      //   return getArtId.get(portId)
+      //     .then((res) => {
+      //       return artList.concat(res.data.msg.map((item) => {
+      //         return '/articles/' + (item.readableId || item._id)
+      //       }))
+      //     })
+      //     .catch((err) => {
+      //       console.log('this port %s err is $s', port, err)
+      //     })
+      // })).then((res) => {
+      //   let idArr = res.reduce((c, d) => { return c.concat(d) }).concat('/pages/2')
+      //   console.log(idArr, 'aaa--idArr')
+      //   callback(null, idArr)
+      // })
+      
+      /**
+       * 得到tag列表
+       */ 
+      let tagIds = getArtId.get(port + 'tag/list')
+        .then((res) => {
+          return tagList.concat(res.data.msg.map((item) => {
+            return '/tag/' + item.tag
+          }))
+        })   
+      /**
+       * 得到category列表
+       */   
+      let cateIds = getArtId.get(port + 'category/list')
+        .then((res) => {
+          return catList.concat(res.data.msg.map((item) => {
+            return '/category/' + item.category
+          }))
+        })  
+
+      /**
+       * 将上述几个一起返回来
+       */
+
+      /**
+       * 得到所有的文章id
+       */
+      Promise.all(pageUrlArr.map((portId) => {
+        return getArtId.get(portId)
+          .then((res) => {
+            return res.data.msg.map((item) => {
+              return '/articles/' + (item.readableId || item._id)
+            })
+          })
+      })).then((res) => {
+        artList = res.reduce((a, b) => { return a.concat(b) })
+        Promise.all([tagIds, cateIds]).then((res) => {
+          let idArr = res.reduce((a, b) => { return a.concat(b) }).concat(pageList).concat(artList)
+          callback(null, idArr)
+        })
+      })  
     }
   },
   plugins: [

@@ -57,10 +57,11 @@
       top: 0;
       .brief {
         text-indent: 25px;
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
+        // display: -webkit-box;
+        // -webkit-line-clamp: 4;
+        // -webkit-box-orient: vertical;
         overflow: hidden;
+        max-height: 108px;
       }
       .href {
         cursor: pointer;

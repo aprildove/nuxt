@@ -35,6 +35,9 @@
     font-size: 24px;
     color: #0b1802;
     cursor: pointer;
+    max-height: 32px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .title-home:hover {
     text-shadow: 2px 3px 1px #d0d0d0;

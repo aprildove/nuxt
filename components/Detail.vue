@@ -3,7 +3,7 @@
     <div class='page-header'>
       <headline :item='articleData'></headline>
       <div class="ava">
-        <img src="../assets/images/Avatar.jpg" >
+        <img>
       </div>
       <tags :item='articleData'></tags>
       <div class="author lh32">
@@ -37,20 +37,7 @@
     watch: {
       articleData: function (now, old) {
         if (now) {
-          console.log('zz-articleData')
           this.publishTime = now.publish_time.substr(0, 10)
-        }
-      }
-    },
-    methods: {
-      convertImgSrc: function () {
-        if (process.browser) {
-          let nodes = document.querySelectorAll('.main-body img')
-          nodes.forEach(function (e) {
-            let newUrl = 'http://w-lab01.skyeye.shbt.qihoo.net:12312/' + e.src.substr(e.src.indexOf('/uploads'))
-            e.src = newUrl
-            console.log(newUrl, 'ggg-new Url')
-          })
         }
       }
     },
@@ -65,6 +52,9 @@
           }
         })
         this.publishTime = this.articleData.publish_time.substr(0, 10)
+        // 转换头像地址， 格式化发布时间
+        let imgSrc = process.env.NODE_ENV !== 'production' ? 'http://w-lab01.skyeye.shbt.qihoo.net:12312' : ''
+        $('.ava img')[0].src = this.articleData.headImg ? (imgSrc + this.articleData.headImg) : '../../assets/images/photo.jpg'
       }
     }
   }
