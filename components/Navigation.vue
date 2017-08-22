@@ -4,9 +4,8 @@
       <a :href="'/'">
         <img class="ico-favicon" src="../assets/images/blog-icon.png"/>
       </a>
-      <a :href="'/'">
-          <img class="ico-home" src="../assets/images/home.png"/>
-      </a>
+      <div class="ico-home" @click="backHome()">
+      </div>
     </div>
     <dis-pic v-if="isMainPage"></dis-pic>
   </div>
@@ -17,6 +16,11 @@
   export default {
     computed: {
       ...mapState(['isMainPage'])
+    },
+    methods: {
+      backHome: function () {
+        window.location.pathname = '/'
+      }
     },
     components: {
       DisPic
@@ -34,9 +38,16 @@
       cursor: pointer;
     }
     .ico-home {
+      width: 32px;
+      height: 32px;
       display: inline-block;
-      margin: 16px;
+      margin: 16px 32px;
       float: right;
+      cursor: pointer;
+      background: url('../assets/images/home.png') no-repeat;
+    }
+    .ico-home:hover {
+      background: url('../assets/images/home-light.png') no-repeat;
     }
   }
   .disPic .pic {

@@ -52,6 +52,9 @@ body {
   margin: 0;
   text-decoration: none;
 }
+li {
+  list-style-type:none
+}
 
 a:link {color: #0b1802}   /* 未访问的链接 */
 a:visited {color: #0b1802}  /* 已访问的链接 */
@@ -98,7 +101,7 @@ a:active {color: #0b1802} /* 选定的链接 */
     td, th {
       padding: 0.5rem;
       font-size:0.95em;
-      text-align:center;
+      // text-align:center;
       border-collapse:collapse; 
     }
     tr {

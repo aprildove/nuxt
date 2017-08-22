@@ -5,16 +5,11 @@
         <introduce v-for="item in catContent.msg" 
           :key="item._id" :item="item"></introduce>
       </div>
-      <div>
-        <p v-for="i in catContent[0]">
-          
-        </p>
-      </div>
       <div class="paging" v-show="isShowPaging">
-        <a class="left pag-btn" :class="{'btn-unable': curPage < 2 }" :href="'/'" @click="togBtnDown('before')">
+        <a class="left pag-btn" :class="{'btn-unable': curPage < 2 }" @click="togBtnDown('before')">
           上一页
         </a>
-        <a class="right pag-btn" :class="{'btn-unable': curPage >= totalPage }" :href="'/pages/2'" @click="togBtnDown('next')">
+        <a class="right pag-btn" :class="{'btn-unable': curPage >= totalPage }" @click="togBtnDown('next')">
           下一页
         </a>
         <div class="mid">
@@ -49,12 +44,14 @@
           if (this.curPage > 1) {
             this.curPage -= 1
             this.pipePageNum([this.curPage, 2])
-          }
+            window.location.pathname = '/'
+          } else return false
         } else if (type === 'next') {
           if (this.curPage < this.totalPage) {
             this.curPage += 1
             this.pipePageNum([this.curPage, 2])
-          }
+            window.location.pathname = '/pages/2'
+          } else return false
         }
       }
     },
@@ -62,9 +59,10 @@
       if (process.browser) {
         let path = window.location.pathname
         let num = path && path.split('/')[2]
+        let isPage = path && path.split('/')[1] === 'pages'
         this.curPage = num || this.pageNum[0]
         this.totalPage = this.pageNum[1]
-        if () {
+        if (!isPage && path !== '/') {
           this.isShowPaging = false
         }
       }

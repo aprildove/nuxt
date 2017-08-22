@@ -46,7 +46,8 @@
         this.pipeTagParam(param)
         this.tagItem = item[type]
         if (process.browser) {
-          let path = '/' + type + '/' + encodeURI(this.tagItem)
+          let tagPath = '/' + type + '/' + encodeURI(this.tagItem)
+          let path = (this.tagItem === '全部') ? '/' : tagPath
           window.location.pathname = path
         }
       },

@@ -12,6 +12,8 @@
     </div>
     <div class='main-body' v-html="articleData.content">
     </div>
+    <div class="back-top" @click="backTop()">
+    </div>
   </div>
 </template>
 <script>
@@ -41,8 +43,14 @@
         }
       }
     },
+    methods: {
+      backTop: function () {
+        $('html, body').animate({scrollTop: 0}, 1000)
+      }
+    },
     mounted () {
       if (process.browser) {
+        // 代码样式处理
         $('.hljs code').each(function (i, block) {
           var lines = $(this).text().split('\n').length - 1
           var $numbering = $('<ul/>').addClass('pre-numbering')
@@ -95,6 +103,18 @@
       padding: 0 108px;
       margin: 28px auto 168px;
       background: url('../assets/images/post-entry-bg.png') no-repeat -10px 9px;
+    }
+    .back-top {
+      width: 48px;
+      height: 48px;
+      position: fixed;
+      bottom: 30px;
+      right: 20px;
+      background: url('../assets/images/top.png') no-repeat;
+    }
+    .back-top:hover {
+      cursor: pointer;
+      background: url('../assets/images/top-light.png') no-repeat;
     }
   }
 </style>
